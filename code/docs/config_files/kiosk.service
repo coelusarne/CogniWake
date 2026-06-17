@@ -1,0 +1,19 @@
+[Unit]
+Description=Kiosk
+After=graphical.target
+
+[Service]
+User=student
+Environment=DISPLAY=:0
+Environment=XAUTHORITY=/home/student/.Xauthority
+ExecStart=/usr/bin/chromium-browser --noerrdialogs --disable-infobars http://localhost/front_inside
+Restart=always
+
+[Install]
+WantedBy=graphical.target
+
+
+
+
+
+
