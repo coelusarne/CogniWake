@@ -64,21 +64,15 @@ class AlarmService:
                     if isinstance(alarm_time_raw, datetime):
                         alarm_hour = alarm_time_raw.hour
                         alarm_minute = alarm_time_raw.minute
-                        dt_parsed = alarm_time_raw
                     else:
-                        # fallback parse
                         if "T" in alarm_time_raw:
                             time_str = alarm_time_raw.split("T")[1][:5]
                         elif " " in alarm_time_raw:
                             time_str = alarm_time_raw.split(" ")[1][:5]
                         else:
                             time_str = alarm_time_raw[:5]
-                        alarm_hour, alarm_minute = map(int, time_str.split(":"))
 
-                        try:
-                            dt_parsed = datetime.fromisoformat(alarm_time_raw.replace('Z', ''))
-                        except Exception:
-                            dt_parsed = None
+                        alarm_hour, alarm_minute = map(int, time_str.split(":"))
 
                     bitmask = alarm.get("days_bitmask", 0)
 
@@ -86,13 +80,7 @@ class AlarmService:
                     if bitmask > 0:
                         is_today = (bitmask & current_day_bit) > 0
                     else:
-                        #ot fallback
-                        if dt_parsed:
-                            is_today = (dt_parsed.year == now.year and
-                                        dt_parsed.month == now.month and
-                                        dt_parsed.day == now.day)
-                        else:
-                            is_today = True
+                        is_today = False
 
                     alarm_id = alarm["alarmID"]
 

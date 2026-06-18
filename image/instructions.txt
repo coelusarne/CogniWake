@@ -1,3 +1,20 @@
 Download the image from the google drive: https://drive.google.com/file/d/1fp22YV6iv-l65GfR7GNjxbW5kU8ssPuj/view?usp=sharing
 Extract the archive.
 Use extracted archive to flash your SD card.
+
+Note: The alarm service included on the image has a bug where the alarm is triggered if there is 0 days selected.
+
+To replace the AlarmService on the device:
+ssh into cogniwake@{ip-in-network-box}
+
+in the CogniWake directory:
+Locate backend/services/AlarmService.py
+replace it with the version in this repository
+
+in a terminal, run:
+sudo pkill -9 uvicorn
+
+and immediately after: 
+sudo systemctl restart fastapi
+
+Alternatively, you can also reboot the device via the menus.
